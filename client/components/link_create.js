@@ -4,13 +4,14 @@ class LinkCreate extends Component {
 
    handleSubmit(event) {
       event.preventDefault();
+      console.log(this.refs.input.value)
    }
    render() {
       return (
          <form onSubmit={this.handleSubmit.bind(this)}>
             <div className="form-group">
                <label>Link to Shorten</label>
-               <input type="text" className="form-control"/>
+               <input ref="input" type="text" className="form-control"/>
             </div>
             <button className="btn btn-primary">Shorten!</button>
          </form>
