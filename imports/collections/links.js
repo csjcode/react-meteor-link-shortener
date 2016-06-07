@@ -6,6 +6,11 @@ Meteor.methods({
    'links.insert': function (url) {
       validUrl.isUri(url);
       check(url,Match.Where(url => validUrl.isUri(url)));
+
+      // Ready to save URL
+      const token = Math.random().toString(36).slice(-5);
+      Links.insert({ url,token,clicks:0 })
+
    }
 });
 
