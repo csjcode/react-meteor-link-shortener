@@ -12,10 +12,20 @@ Meteor.startup(() => {
 
 });
 
+// executed when user visits with route like http://localhost:3000/abcd
+function onRoute(req,res,next) {
+  // take token out of url and try to find matching link in the Links collection
+  const link = Links.findOne({ token:req.params.token });
+
+  // if link object redirect user to long url
+
+
+  // else , send user to React app
+}
+
 // below will only match one level of directories ie. http://localhost:3000/abcd not http://localhost:3000/abcd/ef/g
 
 const middleware = ConnectRoute (function (router) {
-  router.get('/:token',(req) => console.log(req))
-})
+  router.get('/:token',onRoute)
 
 WebApp.connectHandlers.use(middleware);
