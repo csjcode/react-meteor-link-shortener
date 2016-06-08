@@ -8,7 +8,7 @@ Meteor.startup(() => {
 
   Meteor.publish('links',function () {
     return Links.find({});
-  })
+  });
 
 });
 
@@ -18,14 +18,19 @@ function onRoute(req,res,next) {
   const link = Links.findOne({ token:req.params.token });
 
   // if link object redirect user to long url
-
-
-  // else , send user to React app
+  if (link){
+    res.writeHead(307, {'Location':link.url}); // redirect
+    res.end();
+  } else {
+    // else , send user to React app
+    next();
+  }
 }
 
 // below will only match one level of directories ie. http://localhost:3000/abcd not http://localhost:3000/abcd/ef/g
 
 const middleware = ConnectRoute (function (router) {
-  router.get('/:token',onRoute)
+  router.get('/:token',onRoute);
+});
 
 WebApp.connectHandlers.use(middleware);
